@@ -1,20 +1,21 @@
 package core;
 
-/**
- * This class is used by the operating system to interact with the hardware 'FlashMemoryDevice'.
- */
+import devices.FlashMemoryDevice;
+
+
 public class DeviceDriver {
 
+    private final FlashMemoryDevice flashMemoryDevice;
+
     public DeviceDriver(FlashMemoryDevice hardware) {
-        // TODO: implement this method
+        this.flashMemoryDevice = hardware;
     }
 
     public byte read(long address) {
-        // TODO: implement this method
-        return -1;
+        return this.flashMemoryDevice.read(address);
     }
 
     public void write(long address, byte data) {
-        // TODO: implement this method
+        this.flashMemoryDevice.write(address, data);
     }
 }
