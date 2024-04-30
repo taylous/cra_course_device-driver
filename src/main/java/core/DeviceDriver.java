@@ -16,6 +16,6 @@ public class DeviceDriver {
     }
 
     public void write(long address, byte data) {
-        // TODO: implement this method
+        this.flashMemoryDevice.write(address, data);
     }
 }
