@@ -1,6 +1,7 @@
 import core.DeviceDriver;
 import devices.DataCenterSSD;
 import exceptions.CustomException;
+import exceptions.ReadFailException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -39,12 +40,13 @@ public class DeviceDriverTest {
                 readData = driver.read(ADDRESS);
 
                 if (prevReadData != readData) {
-                    expected = -1;
-                    break;
+                    throw new ReadFailException("읽기 오류");
                 }
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        } catch (ReadFailException e2) {
+            expected = -1;
         }
         verify(driver, times(5)).read(ADDRESS);
         assertThat(readData).isEqualTo(expected);
