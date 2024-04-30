@@ -22,8 +22,6 @@ public class DataCenterSSD extends Memory implements FlashMemoryDevice {
         try {
             byte[] storage = this.getData();
 
-            System.out.println(storage[(int) address]);
-
             if(storage[(int) address] != (byte) 0xFF) {
                 throw new CustomException("이미 값이 적혀 있습니다.");
             }
