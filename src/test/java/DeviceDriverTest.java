@@ -66,7 +66,6 @@ public class DeviceDriverTest {
 
     @Test
     void 쓰여진_주소에_데이터_쓰기() {
-
         try {
             DeviceDriver driver = new DeviceDriver(new DataCenterSSD());
             byte actual = 7;
@@ -75,6 +74,26 @@ public class DeviceDriverTest {
             driver.write(ADDRESS, actual);
         } catch (CustomException e) {
             assertThat(e.getMessage()).isEqualTo("이미 값이 적혀 있습니다.");
+        }
+    }
+
+    @Test
+    void 읽기_예외_테스트() {
+        try {
+            DeviceDriver driver = new DeviceDriver(new DataCenterSSD());
+            driver.read(-1);
+        } catch (RuntimeException e) {
+            assertThat(e.getMessage()).isEqualTo("유효하지 않은 접근입니다.");
+        }
+    }
+
+    @Test
+    void 쓰기_예외_테스트() {
+        try {
+            DeviceDriver driver = new DeviceDriver(new DataCenterSSD());
+            driver.write(-1, (byte) 10);
+        } catch (RuntimeException e) {
+            assertThat(e.getMessage()).isEqualTo("유효하지 않은 접근입니다.");
         }
     }
 }
