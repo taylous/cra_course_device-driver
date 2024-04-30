@@ -1,5 +1,6 @@
 import core.DeviceDriver;
 import devices.DataCenterSSD;
+import exceptions.CustomException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -8,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -61,5 +63,17 @@ public class DeviceDriverTest {
         byte expected = driver.read(0xFF);
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void 쓰여진_주소에_데이터_쓰기() {
+        DeviceDriver driver = new DeviceDriver(new DataCenterSSD());
+        long address = 0xFF;
+        byte actual = 7;
+
+        assertThrows(CustomException.class, () -> {
+            driver.write(address, actual);
+            driver.write(address, actual);
+        });
     }
 }
